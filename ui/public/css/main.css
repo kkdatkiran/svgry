@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f7f7f7;
+  font-family: Roboto, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  overflow: hidden;
+}
+
+#appdiv {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.optimizer {
+  display: flex;
+  flex: 1;
+}
+
+.optimizer > div {
+  flex: 1;
+}
+
+.svgContainer {
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 3px;
+  margin-top: 10px;
+  background-image: linear-gradient(45deg, #bfbfbf 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #bfbfbf 75%),
+    linear-gradient(45deg, transparent 75%, #bfbfbf 75%), linear-gradient(45deg, #bfbfbf 25%, #fff 25%);
+  background-size: 40px 40px;
+  background-position: 0 0, 0 0, -20px -20px, 20px 20px;
+}
+
+.controlContainer {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.controlContainer .field {
+  padding: 6px;
+  margin-bottom: 3px;
+  margin-right: 3px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+.controlContainer .field:hover {
+  background-color: #ddd;
+}
+
+.controlContainer .field input {
+  flex: 1;
+  cursor: pointer;
+}
+
+.controlContainer .field input[type="range"] {
+  min-width: 20px;
+}
+
+.controlContainer .colorField {
+  width: calc(20% - 6px);
+}
+
+.controlContainer .colorField.sliderField {
+  width: calc(30% - 6px);
+}
+
+.controlContainer .sliderField {
+  width: calc(50% - 6px);
+}
+
+.controlContainer .booleanField {
+  width: calc(15% - 6px);
+}
+
+.controlContainer .sectionTitle {
+  color: #555;
+  font-size: 15px;
+  display: flex;
+}
+
+.controlContainer .label {
+  color: #777;
+  font-size: 13px;
+  display: inline-block;
+  margin-right: 3px;
+}
+
+.controlContainer .section {
+  margin-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding-bottom: 5px;
+  padding-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media only screen and (max-width: 900px) {
+  #appdiv {
+    display: none;
+  }
+
+  #desktopMessage {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    font-size: 25px;
+    font-weight: 400;
+    padding-top: 45vh;
+    text-align: center;
+    color: #aaaaaa;
+  }
+}
