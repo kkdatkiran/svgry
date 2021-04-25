@@ -5,10 +5,10 @@ import { COLORS } from "../../../constants";
 const OptimizerStateContext = React.createContext();
 const OptimizerDispatchContext = React.createContext();
 
-const CHANGE_OPTION = (1 << 3) | 0x100000;
-const CHANGE_DATA_POINTS = (1 << 4) | 0x100000;
-const RESET_OPTIONS = (1 << 5) | 0x100000;
-const CHANGE_REDUCED_DATA_POINTS = (1 << 6) | 0x100000;
+const CHANGE_OPTION = (1 << 1) | 0x100000;
+const CHANGE_DATA_POINTS = (1 << 2) | 0x100000;
+const RESET_OPTIONS = (1 << 3) | 0x100000;
+const CHANGE_REDUCED_DATA_POINTS = (1 << 4) | 0x100000;
 
 const defaultState = {
   options: {
@@ -22,6 +22,7 @@ const defaultState = {
     showBorderRegion: false,
     borderColor: COLORS[18],
     borderPadding: { left: 0, right: 0, top: 0, bottom: 0 },
+    smoothWithCurve: false,
   },
   dataPoints: [],
   viewBox: { sx: 0, sy: 0, width: 10, height: 10 },

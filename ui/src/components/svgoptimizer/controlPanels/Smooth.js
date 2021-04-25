@@ -11,7 +11,7 @@ import {
 export default function Smooth() {
   const dispatch = useOptimizerContextDispatch();
   const {
-    options: { dataPointsReductionFactor },
+    options: { dataPointsReductionFactor, smoothWithCurve },
     dataPoints,
     viewBox: { width, height },
   } = useOptimizerContextState();
@@ -42,6 +42,22 @@ export default function Smooth() {
               dispatch({
                 type: CHANGE_OPTION,
                 payload: { option: "dataPointsReductionFactor", optionValue: e.target.value },
+              })
+            }
+          />
+        </div>
+        <div className="field booleanField">
+          <label htmlFor="smoothWithCurve" className="label">
+            Curve :
+          </label>
+          <input
+            name="showPoint"
+            type="checkbox"
+            checked={smoothWithCurve}
+            onChange={() =>
+              dispatch({
+                type: CHANGE_OPTION,
+                payload: { option: "smoothWithCurve", optionValue: !smoothWithCurve },
               })
             }
           />

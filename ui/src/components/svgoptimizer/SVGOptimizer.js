@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { COLORS } from "./../../constants";
+import { COLORS } from "../../constants";
 
 import {
   useOptimizerContextState,
@@ -9,22 +9,82 @@ import {
   CHANGE_REDUCED_DATA_POINTS,
 } from "./context/OptimizerContext";
 
-function computePath(data) {
+function computePath(data, smoothWithCurve) {
   let newPaths = [];
   if (!data || !data.length) return newPaths;
   let currentData;
   for (let i = data.length - 1; i >= 0; i--) {
-    currentData = data[i];
+    currentData = smoothWithCurve ? curveControlPoints(data[i]) : data[i];
     let path = `M ${currentData[0][0]} ${currentData[0][1]} `;
     for (let j = 1; j < currentData.length; j++) {
-      path += `L ${currentData[j][0]} ${currentData[j][1]} `;
+      if (smoothWithCurve) {
+        path += `C ${currentData[j - 1][2]} ${currentData[j - 1][3]} ${currentData[j - 1][4]} ${currentData[j - 1][5]} ${
+          currentData[j][0]
+        } ${currentData[j][1]} `;
+      } else {
+        path += `L ${currentData[j][0]} ${currentData[j][1]} `;
+      }
     }
     newPaths.push(path + " Z");
   }
   return newPaths;
 }
 
-export default function SVGEditor() {
+function curveControlPoints(points) {
+  points = JSON.parse(JSON.stringify(points));
+  points.push([...points[0]]);
+  points.push([...points[0]]);
+
+  let n = points.length - 1;
+  let a = [[0, 0]],
+    b = [[2, 2]],
+    c = [[1, 1]],
+    r = [[points[0][0] + 2 * points[1][0], points[0][1] + 2 * points[1][1]]];
+
+  //0  x, 1  y
+  for (let i = 1; i < n - 1; i++) {
+    a[i] = [1, 1];
+    b[i] = [4, 4];
+    c[i] = [1, 1];
+    r[i] = [4 * points[i][0] + 2 * points[i + 1][0], 4 * points[i][1] + 2 * points[i + 1][1]];
+  }
+  a[n - 1] = [2, 2];
+  b[n - 1] = [7, 7];
+  c[n - 1] = [0, 0];
+  r[n - 1] = [8 * points[n - 1][0] + points[n][0], 8 * points[n - 1][1] + points[n][1]];
+
+  let m;
+  for (let i = 1; i < n; i++) {
+    m = (a[i][0] / b[i - 1][0]) * 1;
+    b[i][0] = b[i][0] - m * c[i - 1][0];
+    r[i][0] = r[i][0] - m * r[i - 1][0];
+
+    m = (a[i][1] / b[i - 1][1]) * 1;
+    b[i][1] = b[i][1] - m * c[i - 1][1];
+    r[i][1] = r[i][1] - m * r[i - 1][1];
+  }
+
+  points[n - 1][2] = r[n - 1][0] / b[n - 1][0];
+  points[n - 1][3] = r[n - 1][1] / b[n - 1][1];
+  for (let i = n - 2; i >= 0; --i) {
+    points[i][2] = ((r[i][0] - c[i][0] * points[i + 1][2]) / b[i][0]) * 1;
+    points[i][3] = ((r[i][1] - c[i][1] * points[i + 1][3]) / b[i][1]) * 1;
+  }
+
+  for (let i = 0; i < n - 1; i++) {
+    points[i][4] = 2 * points[i + 1][0] - points[i + 1][2];
+    points[i][5] = 2 * points[i + 1][1] - points[i + 1][3];
+  }
+
+  points[n - 1][4] = 0.5 * (points[n][0] + points[n - 1][2]);
+  points[n - 1][5] = 0.5 * (points[n][1] + points[n - 1][3]);
+
+  points.splice(points.length - 1, 1);
+
+  return points;
+}
+
+export default function SVGOptimizer({ regions, onChange }) {
   const dispatch = useOptimizerContextDispatch();
   const {
     options: {
@@ -37,6 +97,7 @@ export default function SVGEditor() {
       pointsColor,
       borderColor,
       pointSize,
+      smoothWithCurve,
     },
     reducedDataPoints: dataPoints,
     viewBox,
@@ -44,9 +105,9 @@ export default function SVGEditor() {
 
   const [paths, setPaths] = useState([]);
   useEffect(() => {
-    setPaths(computePath(dataPoints));
+    setPaths(computePath(dataPoints, smoothWithCurve));
     dispatch({ type: CHANGE_OPTION, payload: { option: "lastComputedAt", optionValue: Date.now() } });
-  }, [dataPoints]);
+  }, [regions, smoothWithCurve]);
 
   const { left: pLeft, right: pRight, top: pTop, bottom: pBottom } = borderPadding;
 
@@ -59,10 +120,6 @@ export default function SVGEditor() {
             d={d}
             fill={regionColors[i] ?? COLORS[i % COLORS.length]}
             fillOpacity={regionOpactiy[i] ?? 1}
-            tabIndex="0"
-            onDoubleClick={(e) => {
-              // let x = e.offsetX;
-            }}
           ></path>
         ))}
         {showDataPoints &&

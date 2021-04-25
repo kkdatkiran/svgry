@@ -29,7 +29,7 @@ public class Algo {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
 		StringBuilder sb=new StringBuilder("[");
-		for (int k = 1; k <= 6; k++) {
+		for (int k = 1; k <= 7; k++) {
 			BufferedImage bi = ImageIO.read(new File("./sclr/" + k + ".jpg"));
 			Mat img = Imgcodecs.imread("./sclr/" + k + ".jpg", Imgcodecs.IMREAD_GRAYSCALE);
 
@@ -41,7 +41,7 @@ public class Algo {
 
 			int i = 1;
 			Graphics g = bi.getGraphics();
-			double areaMinThresh = bi.getWidth() * bi.getHeight() * 1 / 100;
+			double areaMinThresh = bi.getWidth() * bi.getHeight() * 0.2 / 100;
 			double areaMaxThresh = bi.getWidth() * bi.getHeight() * 98 / 100;
 			double area;			
 			sb.append("[");
@@ -68,7 +68,7 @@ public class Algo {
 				sb.append("],");
 			}
 			sb.deleteCharAt(sb.length()-1);
-			sb.append("]"+(k == 6 ? "" : ",")+"\n");
+			sb.append("]"+(k == 7 ? "" : ",")+"\n");
 			g.dispose();
 			ImageIO.write(bi, "jpg", new File("./sclr/" + k + "out.jpg"));
 		}

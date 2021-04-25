@@ -5,7 +5,7 @@ import Padding from "./controlPanels/Padding";
 import Points from "./controlPanels/Points";
 import RegionColors from "./controlPanels/RegionColors";
 import Smooth from "./controlPanels/Smooth";
-import SVGEditor from "./SVGEditor";
+import SVGOptimizer from "./SVGOptimizer";
 
 export default function Optimizer({ data = [] }) {
   const dispatch = useOptimizerContextDispatch();
@@ -18,7 +18,7 @@ export default function Optimizer({ data = [] }) {
   return (
     <div className="optimizer">
       <div className="svgContainer">
-        <SVGEditor />
+        <SVGOptimizer />
       </div>
       <div className="controlContainer">
         <RegionColors />
