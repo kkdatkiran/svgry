@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { OptimizerContextProvider } from "./svgoptimizer/context/OptimizerContext";
+import { OptimizerContextProvider } from "./svgry/context/OptimizerContext";
 import Header from "./site/Header.js";
 import Banner from "./site/Banner.js";
 import About from "./site/About.js";

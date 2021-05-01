@@ -165,7 +165,7 @@ export default function PictureScreen({ image, onSetLoading, onChange }) {
             setTimeout(() => {
               setRegions(findRegions({ canvasRef, image, croppers }));
               onSetLoading(false);
-            }, 1000);
+            }, 10);
           }}
         >
           Find Regions

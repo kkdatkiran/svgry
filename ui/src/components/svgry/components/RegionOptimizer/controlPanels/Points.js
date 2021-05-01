@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useOptimizerContextDispatch, useOptimizerContextState, CHANGE_OPTION } from "./../context/OptimizerContext";
+import { useOptimizerContextDispatch, useOptimizerContextState, CHANGE_OPTION } from "../../../context/OptimizerContext";
 
 export default function Points() {
   const dispatch = useOptimizerContextDispatch();

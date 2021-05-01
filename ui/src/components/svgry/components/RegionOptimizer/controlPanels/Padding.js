@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { useOptimizerContextDispatch, useOptimizerContextState, CHANGE_OPTION } from "./../context/OptimizerContext";
+import { useOptimizerContextDispatch, useOptimizerContextState, CHANGE_OPTION } from "../../../context/OptimizerContext";
 
 export default function Padding() {
   const [adjustCommonPadding, setAdjustCommonPadding] = useState(false);

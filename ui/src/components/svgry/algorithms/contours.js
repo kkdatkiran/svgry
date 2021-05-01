@@ -1,7 +1,6 @@
 export default function findContours(imgData) {
   const w = imgData.width,
     h = imgData.height;
-  const totArea = w * h;
   let maskArray = new Array(w * h);
   for (let i = 0; i < maskArray.length; i++) maskArray[i] = !imgData.data[i * 4];
 
@@ -118,9 +117,7 @@ export default function findContours(imgData) {
   }
   maskArray = undefined;
   contours.forEach((e) => (e.area = computeContourArea(e.points)));
-  contours = contours.sort((a, b) => a.area - b.area);
-  let pointOnePercent = totArea / 1000;
-  return contours.filter((e) => e.area > pointOnePercent).reverse();
+  return contours;
 }
 
 function computeContourArea(points) {

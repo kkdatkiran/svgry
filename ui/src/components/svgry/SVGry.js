@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import SVGOptimizer from "../svgoptimizer/SVGOptimizer";
 
+import RegionOptimizer from "./components/RegionOptimizer";
 import FirstScreen from "./components/FirstScreen";
 import PictureScreen from "./components/PictureScreen";
-import { START_SCREEN, PICTURE_SCREEN, PICTURE_EDIT_SCREEN, LOADING_SCREEN } from "./constants";
+import SVGEditor from "./components/SVGEditor";
+import { START_SCREEN, PICTURE_SCREEN, PICTURE_EDIT_SCREEN, EDIT_SCREEN, LOADING_SCREEN } from "./constants";
 
 export function SVGry() {
   const [screenNumber, setScreenNumber] = useState(START_SCREEN);
@@ -24,7 +25,7 @@ export function SVGry() {
             setTimeout(() => {
               setImage(img);
               setScreenNumber(PICTURE_SCREEN);
-            }, 1000);
+            }, 10);
           };
         }}
       />
@@ -42,7 +43,17 @@ export function SVGry() {
       />
     );
   } else if ((screenNumber & PICTURE_EDIT_SCREEN) === PICTURE_EDIT_SCREEN) {
-    screenChoice = <SVGOptimizer regions={regions} onChange={setScreenNumber} />;
+    screenChoice = (
+      <RegionOptimizer
+        regions={regions}
+        onChange={(rs) => {
+          setRegions(rs);
+          setScreenNumber(EDIT_SCREEN);
+        }}
+      />
+    );
+  } else if ((screenNumber & EDIT_SCREEN) === EDIT_SCREEN) {
+    screenChoice = <SVGEditor />;
   }
   if ((screenNumber & LOADING_SCREEN) === LOADING_SCREEN) loader = <div className="loader" />;
 

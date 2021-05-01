@@ -25,6 +25,7 @@ body {
 .optimizer {
   display: flex;
   flex: 1;
+  height: 100%;
 }
 
 .optimizer > div {
@@ -36,8 +37,8 @@ body {
   border: 2px solid #ddd;
   border-radius: 3px;
   margin-top: 10px;
-  background-image: linear-gradient(45deg, #bfbfbf 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #bfbfbf 75%),
-    linear-gradient(45deg, transparent 75%, #bfbfbf 75%), linear-gradient(45deg, #bfbfbf 25%, #fff 25%);
+  background-image: linear-gradient(45deg, #ececec 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #ececec 75%),
+    linear-gradient(45deg, transparent 75%, #ececec 75%), linear-gradient(45deg, #ececec 25%, #fff 25%);
   background-size: 40px 40px;
   background-position: 0 0, 0 0, -20px -20px, 20px 20px;
 }
@@ -347,7 +348,7 @@ b {
   align-items: center;
 }
 
-.picutreSteps button {
+button {
   height: 30px;
   font-size: 16px;
   background-color: #fc9546;
@@ -361,8 +362,14 @@ b {
   cursor: pointer;
 }
 
-.picutreSteps button.selected {
+button.selected {
   background-color: #fc9546;
+}
+
+.optimizerButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
 }
 
 .canvasContainer {

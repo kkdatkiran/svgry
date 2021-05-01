@@ -1,5 +1,5 @@
 import React from "react";
 
-export function SVGEditor({ regions }) {
+export default function SVGEditor() {
   return <></>;
 }
